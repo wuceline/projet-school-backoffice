@@ -20,6 +20,8 @@ $router->map(
     ],
     'main-home'
 );
+
+// TEACHER
 $router->map(
     'GET',
     '/teachers',
@@ -28,6 +30,53 @@ $router->map(
         'controller' => '\App\Controllers\TeacherController'
     ],
     'teacher-list'
+);
+$router->map(
+    'GET',
+    '/teacher/add',
+    [
+        'method' => 'create',
+        'controller' => '\App\Controllers\TeacherController'
+    ],
+    'teacher-create'
+);
+$router->map(
+    'POST',
+    '/teacher/add',
+    [
+        'method' => 'createPost',
+        'controller' => '\App\Controllers\TeacherController'
+    ],
+    'teacher-create-post'
+);
+
+// STUDENT
+$router->map(
+    'GET',
+    '/students',
+    [
+        'method' => 'list',
+        'controller' => '\App\Controllers\StudentController'
+    ],
+    'student-list'
+);
+$router->map(
+    'GET',
+    '/student/add',
+    [
+        'method' => 'create',
+        'controller' => '\App\Controllers\StudentController'
+    ],
+    'student-create'
+);
+$router->map(
+    'POST',
+    '/student/add',
+    [
+        'method' => 'createPost',
+        'controller' => '\App\Controllers\StudentController'
+    ],
+    'student-create-post'
 );
 
 $match = $router->match();

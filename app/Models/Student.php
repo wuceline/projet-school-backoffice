@@ -4,12 +4,12 @@ namespace App\Models;
 use App\Utils\Database;
 use PDO;
 
-class Teacher extends CoreModel
+class Student extends CoreModel
 {
 
     private $firstname;
     private $lastname;
-    private $job;
+    private $teacher_id;
     private $status;
     private $created_at;
     private $updated_at;
@@ -18,13 +18,13 @@ class Teacher extends CoreModel
     {
         $pdo = Database::getPDO();
         $sql = '
-        SELECT * FROM `teacher`
+        SELECT * FROM `student`
         ';
         $pdoStatement = $pdo->query($sql);
 
-        $teachers = $pdoStatement->fetchAll(PDO::FETCH_CLASS,self::class);
+        $students = $pdoStatement->fetchAll(PDO::FETCH_CLASS,self::class);
 
-        return $teachers;
+        return $students;
         
     }
 
@@ -32,8 +32,8 @@ class Teacher extends CoreModel
     {
         $pdo = Database::getPDO();
         $sql = '
-        INSERT INTO `teacher` (firstname, lastname, job, created_at)
-        VALUES (:firstname, :lastname, :job, NOW())
+        INSERT INTO `student` (firstname, lastname, teacher_id, created_at)
+        VALUES (:firstname, :lastname, :teacher_id, NOW())
         ';
         
         $pdoStatement = $pdo->prepare($sql);
@@ -41,7 +41,7 @@ class Teacher extends CoreModel
         $queryWorked = $pdoStatement->execute([
             ':firstname' => $this->firstname,
             ':lastname' => $this->lastname,
-            ':job' => $this->job
+            ':teacher_id' => $this->teacher_id,
         ]);
 
         if ($queryWorked){
@@ -50,14 +50,13 @@ class Teacher extends CoreModel
         }
         return false;
 
+
     }
-    
+
     public function update()
     {
         
     }
-
-
 
     /**
      * Get the value of firstname
@@ -99,25 +98,6 @@ class Teacher extends CoreModel
         return $this;
     }
 
-    /**
-     * Get the value of job
-     */ 
-    public function getJob()
-    {
-        return $this->job;
-    }
-
-    /**
-     * Set the value of job
-     *
-     * @return  self
-     */ 
-    public function setJob($job)
-    {
-        $this->job = $job;
-
-        return $this;
-    }
 
     /**
      * Get the value of status
@@ -164,4 +144,16 @@ class Teacher extends CoreModel
     }
 
 
+
+    /**
+     * Set the value of teacher_id
+     *
+     * @return  self
+     */ 
+    public function setTeacher_id($teacher_id)
+    {
+        $this->teacher_id = $teacher_id;
+
+        return $this;
+    }
 }
