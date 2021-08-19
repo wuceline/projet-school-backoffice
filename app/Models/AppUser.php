@@ -8,8 +8,7 @@ class AppUser extends CoreModel
 {
     private $email;
     private $password;
-    private $firstname;
-    private $lastname;
+    private $name;
     private $role;
 
 
@@ -18,7 +17,6 @@ class AppUser extends CoreModel
     }
     public static function find()
     {
-
     }
 
     public static function findByEmail($email){
@@ -42,8 +40,7 @@ class AppUser extends CoreModel
     {}
 
 
-
-
+    //  GETTERS ET SETTERS
     
     /**
      * Get the value of email
@@ -85,45 +82,7 @@ class AppUser extends CoreModel
         return $this;
     }
 
-    /**
-     * Get the value of firstname
-     */ 
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
 
-    /**
-     * Set the value of firstname
-     *
-     * @return  self
-     */ 
-    public function setFirstname($firstname)
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of lastname
-     */ 
-    public function getLastname()
-    {
-        return $this->lastname;
-    }
-
-    /**
-     * Set the value of lastname
-     *
-     * @return  self
-     */ 
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
 
     /**
      * Get the value of role

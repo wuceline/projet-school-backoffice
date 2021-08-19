@@ -28,12 +28,26 @@ class Teacher extends CoreModel
         
     }
 
+    public static function find($id)
+    {
+        $pdo = Database::getPDO();
+        $sql = '
+        SELECT * FROM `teacher`
+        WHERE `id` =' . $id 
+        ;
+        $pdoStatement = $pdo->query($sql);
+        $teacher = $pdoStatement->fetchObject(self::class);
+        return $teacher;
+
+    }
+
+
     public function insert()
     {
         $pdo = Database::getPDO();
         $sql = '
-        INSERT INTO `teacher` (firstname, lastname, job, created_at)
-        VALUES (:firstname, :lastname, :job, NOW())
+        INSERT INTO `teacher` (firstname, lastname, job, status, created_at)
+        VALUES (:firstname, :lastname, :job, :status, NOW())
         ';
         
         $pdoStatement = $pdo->prepare($sql);
@@ -41,7 +55,8 @@ class Teacher extends CoreModel
         $queryWorked = $pdoStatement->execute([
             ':firstname' => $this->firstname,
             ':lastname' => $this->lastname,
-            ':job' => $this->job
+            ':job' => $this->job,
+            ':status' =>$this->status,
         ]);
 
         if ($queryWorked){
@@ -54,10 +69,28 @@ class Teacher extends CoreModel
     
     public function update()
     {
-        
+        $pdo = Database::getPDO();
+        $sql ="
+        UPDATE `teacher` 
+        SET firstname = :firstname, lastname = :lastname, job = :job, status = :status, updated_at= NOW() 
+        WHERE id = :id
+        ";
+
+        $pdoStatement = $pdo->prepare($sql);
+
+        $pdoStatement->bindValue(':firstname', $this->firstname);
+        $pdoStatement->bindValue(':lastname', $this->lastname);
+        $pdoStatement->bindValue(':job', $this->job);
+        $pdoStatement->bindValue(':status', $this->status);
+        $pdoStatement->bindValue(':id', $this->id);
+
+        $pdoStatement->execute();
+
+
     }
 
 
+    // GETTERS ET SETTERS
 
     /**
      * Get the value of firstname
@@ -135,30 +168,6 @@ class Teacher extends CoreModel
     public function setStatus($status)
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of created_at
-     *
-     * @return  self
-     */ 
-    public function setCreated_at($created_at)
-    {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of updated_at
-     *
-     * @return  self
-     */ 
-    public function setUpdated_at($updated_at)
-    {
-        $this->updated_at = $updated_at;
 
         return $this;
     }

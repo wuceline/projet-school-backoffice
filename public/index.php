@@ -48,8 +48,27 @@ $router->map(
         'method' => 'createPost',
         'controller' => '\App\Controllers\TeacherController'
     ],
-    'teacher-create-post'
+    'teacher-create-post',
 );
+$router->map(
+    'GET',
+    '/teacher/update/[i:idTeacher]',
+    [
+        'method'=>'update',
+        'controller'=>'\App\Controllers\TeacherController'
+    ],
+    'teacher-update'
+);
+$router->map(
+    'POST',
+    '/teacher/update/[i:idTeacher]',
+    [
+        'method'=>'updatePost',
+        'controller'=>'\App\Controllers\TeacherController'
+    ],
+    'teacher-update-post'
+);
+
 
 // STUDENT
 $router->map(
@@ -79,9 +98,26 @@ $router->map(
     ],
     'student-create-post'
 );
+$router->map(
+    'GET',
+    '/student/update/[i:idStudent]',
+    [
+        'method'=>'update',
+        'controller'=>'\App\Controllers\StudentController'
+    ],
+    'student-update'
+);
+$router->map(
+    'POST',
+    '/student/update/[i:idStudent]',
+    [
+        'method'=>'updatePost',
+        'controller'=>'\App\Controllers\StudentController'
+    ],
+    'student-update-post'
+);
 
-
-// LOGIN
+// LOGIN/LOGOUT
 $router->map(
     'GET',
     '/signin',
@@ -100,10 +136,18 @@ $router->map(
     ],
     'signin-post'
 );
-
+$router->map(
+    'GET',
+    '/signout',
+    [
+        'method'=>"signout",
+        'controller'=>'\App\Controllers\SecurityController'
+    ],
+    'signout'
+);
 
 $match = $router->match();
 
-$dispatcher = new Dispatcher($match,'\App\Controllers\ErrorController::err4');
+$dispatcher = new Dispatcher($match,'\App\Controllers\ErrorController::err404');
 
 $dispatcher->dispatch();

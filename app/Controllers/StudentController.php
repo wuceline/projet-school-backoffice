@@ -44,4 +44,38 @@ class StudentController extends CoreController
         
     }
 
+    public function update($idStudent)
+    {
+        $student = Student::find($idStudent);
+
+        $this->show('student/form', [
+            'student'=>$student,
+            'teachers'=> Teacher::findAll(),
+        ]);
+
+    }
+
+    public function updatePost($idStudent)
+    {
+        $student = Student::find($idStudent);
+
+        $firstname = isset($_POST['firstname']) ? $_POST['firstname'] : '';
+        $lastname = isset($_POST['lastname']) ? $_POST['lastname'] : '';
+        $teacher = isset($_POST['teacher']) ? $_POST['teacher'] : '';
+        $status = isset($_POST['status']) ? intval($_POST['status']) : 0;
+
+        $student->setFirstname($firstname);
+        $student->setLastname($lastname);
+        $student->setTeacher_id($teacher);
+        $student->setStatus($status);
+
+        $student->save();
+
+        global $router;
+
+        header('Location:' .$router->generate('student-update',['idStudent'=>$student->getId()]));
+
+    }
+
+
 }

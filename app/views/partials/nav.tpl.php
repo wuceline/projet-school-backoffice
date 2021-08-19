@@ -22,7 +22,7 @@
                     </li>
                     <li class="nav-item">
                     <?php if(isset($_SESSION['userId']) && isset($_SESSION['userObject'])): ?>
-                        <a class="nav-link" href="">Se déconnecter</a>
+                        <a class="nav-link" href="<?= $router->generate('signout') ?>">Se déconnecter</a>
                     <?php else:?>
                         <a class="nav-link" href="<?= $router->generate('signin') ?>">Connexion</a>    
                     <?php endif; ?>

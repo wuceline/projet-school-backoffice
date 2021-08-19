@@ -28,12 +28,26 @@ class Student extends CoreModel
         
     }
 
+    public static function find($id)
+    {
+        $pdo = Database::getPDO();
+        $sql = '
+        SELECT * FROM `student`
+        WHERE `id` =' . $id 
+        ;
+        $pdoStatement = $pdo->query($sql);
+        $student = $pdoStatement->fetchObject(self::class);
+        return $student;
+
+    }
+
+
     public function insert()
     {
         $pdo = Database::getPDO();
         $sql = '
-        INSERT INTO `student` (firstname, lastname, teacher_id, created_at)
-        VALUES (:firstname, :lastname, :teacher_id, NOW())
+        INSERT INTO `student` (firstname, lastname, teacher_id, status, created_at)
+        VALUES (:firstname, :lastname, :teacher_id, :status, NOW())
         ';
         
         $pdoStatement = $pdo->prepare($sql);
@@ -42,6 +56,7 @@ class Student extends CoreModel
             ':firstname' => $this->firstname,
             ':lastname' => $this->lastname,
             ':teacher_id' => $this->teacher_id,
+            ':status' => $this->status,
         ]);
 
         if ($queryWorked){
@@ -55,9 +70,27 @@ class Student extends CoreModel
 
     public function update()
     {
-        
-    }
+        $pdo = Database::getPDO();
+        $sql ="
+        UPDATE `student` 
+        SET firstname = :firstname, lastname = :lastname, teacher_id = :teacher_id, status = :status, updated_at = NOW() 
+        WHERE id = :id
+        ";
 
+        $pdoStatement = $pdo->prepare($sql);
+
+        $pdoStatement->bindValue(':firstname', $this->firstname);
+        $pdoStatement->bindValue(':lastname', $this->lastname);
+        $pdoStatement->bindValue(':teacher_id', $this->teacher_id);
+        $pdoStatement->bindValue(':status', $this->status);
+        $pdoStatement->bindValue(':id', $this->id);
+
+        $pdoStatement->execute();
+
+
+    }
+    
+    // GETTERS ET SETTERS 
     /**
      * Get the value of firstname
      */ 
@@ -100,14 +133,6 @@ class Student extends CoreModel
 
 
     /**
-     * Get the value of status
-     */ 
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
      * Set the value of status
      *
      * @return  self
@@ -118,31 +143,6 @@ class Student extends CoreModel
 
         return $this;
     }
-
-    /**
-     * Set the value of created_at
-     *
-     * @return  self
-     */ 
-    public function setCreated_at($created_at)
-    {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of updated_at
-     *
-     * @return  self
-     */ 
-    public function setUpdated_at($updated_at)
-    {
-        $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
 
 
     /**
@@ -155,5 +155,21 @@ class Student extends CoreModel
         $this->teacher_id = $teacher_id;
 
         return $this;
+    }
+
+    /**
+     * Get the value of teacher_id
+     */ 
+    public function getTeacher_id()
+    {
+        return $this->teacher_id;
+    }
+
+    /**
+     * Get the value of status
+     */ 
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

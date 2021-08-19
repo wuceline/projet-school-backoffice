@@ -9,6 +9,7 @@ class SecurityController extends CoreController
     {
         $this->show('signin/signin');
     }
+
     public function signinPost()
     {
         $email=filter_input(INPUT_POST, 'email');
@@ -29,6 +30,14 @@ class SecurityController extends CoreController
             header('Location:'.$router->generate('signin'));
         }
 
+    }
+
+    public function signout()
+    {
+        unset($_SESSION['userId']);
+        unset($_SESSION['userObject']);
+        global $router;
+        header('Location:'.$router->generate('signin'));
     }
 
 }

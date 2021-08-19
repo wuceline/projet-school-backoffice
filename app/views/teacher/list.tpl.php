@@ -19,7 +19,7 @@
                 <td><?= $currentTeacher->getLastname() ?></td>
                 <td><?= $currentTeacher->getJob() ?></td>
                 <td class="text-right">
-                    <a href="edit.html" class="btn btn-sm btn-warning">
+                    <a href="<?= $router->generate('teacher-update').$currentTeacher->getId() ?>" class="btn btn-sm btn-warning">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </a>
                     <div class="btn-group">

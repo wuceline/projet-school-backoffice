@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Utils\Database;
 
 class CoreController
 {
@@ -21,6 +20,8 @@ class CoreController
             'teacher-list'          => ['admin', 'user'],
             'teacher-create'        => ['admin'],
             'teacher-create-post'   => ['admin'],
+            'teacher-update'        => ['admin'],
+            'teacher-update-post'   => ['admin'],
             'student-list'          => ['admin', 'user'],
             'student-create'        => ['admin', 'user'],
             'student-create-post'   => ['admin', 'user'],
@@ -30,7 +31,7 @@ class CoreController
             $authorizedRoles = $acl[$routeName];
             $this->checkAuthorization($authorizedRoles);
         }
-        
+
     }
 
     protected function show($viewName, $viewData=[])
