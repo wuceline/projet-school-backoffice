@@ -21,7 +21,11 @@
                         <a class="nav-link" href="./appuser/list.html">Utilisateurs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/logout">Se déconnecter</a>
+                    <?php if(isset($_SESSION['userId']) && isset($_SESSION['userObject'])): ?>
+                        <a class="nav-link" href="">Se déconnecter</a>
+                    <?php else:?>
+                        <a class="nav-link" href="<?= $router->generate('signin') ?>">Connexion</a>    
+                    <?php endif; ?>
                     </li>
                 </ul>
             </div>

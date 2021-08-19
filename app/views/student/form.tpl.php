@@ -1,4 +1,4 @@
-<div class="container my-4"> <a href="../student/list.html" class="btn btn-success float-right">Retour</a>
+<div class="container my-4"> <a href="<?= $router->generate('student-list')?>" class="btn btn-success float-right">Retour</a>
         <h2>Ajouter un étudiant</h2>
 
         <form action="" method="POST" class="mt-5">

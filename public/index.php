@@ -1,6 +1,7 @@
 <?php 
 require_once '../vendor/autoload.php';
 
+session_start();
 
 $router = new AltoRouter();
 
@@ -78,6 +79,28 @@ $router->map(
     ],
     'student-create-post'
 );
+
+
+// LOGIN
+$router->map(
+    'GET',
+    '/signin',
+    [
+        'method' => 'signin',
+        'controller' => '\App\Controllers\SecurityController'
+    ],
+    'signin'
+);
+$router->map(
+    'POST',
+    '/signin',
+    [
+        'method' => 'signinPost',
+        'controller' => '\App\Controllers\SecurityController'
+    ],
+    'signin-post'
+);
+
 
 $match = $router->match();
 
